@@ -1,8 +1,9 @@
   module Auth
     class RegistrationsController < Devise::RegistrationsController
+      skip_before_action :verify_authenticity_token, only: [:create, :update]
       def create
         user = User.new(user_params)
-      
+
         if user.save
           render json: { message: 'User registration successful' }, status: :created
         else
@@ -11,11 +12,11 @@
       rescue StandardError => e
         render json: { error: e.message }, status: :internal_server_error
       end
-    
+
       private
-    
+
       def user_params
         params.require(:user).permit(:name, :email, :password, :password_confirmation)
       end
     end
-end
+  end

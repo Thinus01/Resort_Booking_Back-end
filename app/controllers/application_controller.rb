@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::API
     include ActiveSupport::Rescuable
+    include ActionController::Cookies
+    include ActionController::RequestForgeryProtection
   
+    protect_from_forgery with: :exception
+
     rescue_from StandardError, with: :render_internal_server_error
     rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
   
