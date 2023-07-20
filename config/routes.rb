@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   devise_for :users, path: 'auth', controllers: {
     sessions: 'auth/sessions',
     registrations: 'auth/registrations'
@@ -15,4 +16,8 @@ Rails.application.routes.draw do
       resources :registrations, only: [:create]
     end
   end
+
+  resources :resorts, only: [:index, :show, :create, :destroy]
+  resources :bookings, only: [:index, :create, :destroy]
+
 end
